@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  {% load static %}
+  <meta charset="utf-8">
+  <title>Todo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{% static 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' %}">
+  <script src="{% static 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js' %}"></script>
+  <script src="{% static 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js' %}"></script>
+  <!--style-->
+  <style>
+  .card {
+
+   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.5),
+               0 6px 20px 0 rgba(0,0,0,0.39);
+   background: DarkOrange;
+   margin-bottom : 5%;
+   border-radius: 25px;
+   padding : 2%;
+   overflow: auto;
+   resize: both;
+   text-overflow: ellipsis;
+  }
+  .card:hover{
+    background: lightblue;
+  }
+
+  .submit_form{
+
+    text-align: center;
+    padding: 3%;
+    background: DarkOrange;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4),
+                0 6px 20px 0 rgba(0,0,0,0.36);
+  }
+  </style>
+
+</head>
+
+<body  class="container-fluid">
+
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alert alert-info">
+    <strong>{{message}}</strong>
+  </div>
+  {% endfor %}
+  {% endif %}
+
+  <center class="row">
+    <h1><i>Mening Kundaligim</i></h1>
+    <hr />
+  </center>
+
+  <div class="row">
+
+    <div class="col-md-8">
+      <div class="card">
+        {% for reja in rejalar %}
+        <center><b>{{reja.sarlavha}}</b></center>
+        {%endfor%}
+        <hr/>
+        {% if rejalar %}
+        {% for reja in rejalar %}
+        {{reja.sarlavha}}
+        <hr/>
+        {{reja.batafsil}}
+        <hr/>
+        {{reja.yonalish}}
+        {% endfor %}
+        {% endif %}
+        <br />
+        <button class="btn btn-primary" style="float: right;"><span class="glyphicon glyphicon-trash"></span><a href="/reja_ochir/{{reja.id}}/">O'chirish</a></button>
+      </div>
+    </div>
+    <div class="col-md-1"> </div>
+    <div class="col-md-3" >
+      <div  class="submit_form">
+      <form method="post"> {% csrf_token %}
+            <input  type="text" name="s" placeholder="Sarlavha">
+            <input type="text"  name="b" placeholder="Batafsil">
+        <select name="y">
+          <option value="Hozirgi maqsad">Hozirgi maqsad</option>
+          <option value="Kelajakdagi maqsad">Kelajakdagi maqsad</option>
+        </select>
+        <center>
+        <button type="submit" class="btn btn-default">Topshirish</button>
+      </center>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+
+</html>
